@@ -1,11 +1,11 @@
 {
-	"name": "myNodeApp",
-	"author": "Jaime Developer",
-	"description": "my test node.js application",
+	"name": "my-social-network",
+	"description": "A Test Social Network App",
 	"version": "0.0.1",
 	"dependencies": {
-		"connect": "1.8.x",
-		"express": "2.5.x"
+		"express": ">= 2.5.x",
+		"jade": ">= 0.0.1",
+		"mongoose": ">= 2.6.5"
 	},
 	"engine": "0.10.x",
 	"main": "app.js"

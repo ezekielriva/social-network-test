@@ -1,46 +1,13 @@
-var http = require('http'),
-		path = require('path'),
-		fs = require('fs'),
-		extensions = {
-			'.html' : 'text/html',
-			'.css'  : 'text/css',
-			'.js'   : 'application/javascript',
-			'.png'  : 'image/png',
-			'.gif'  : 'image/gif',
-			'.jpg'  : 'image/jpeg'
-		};
+var express = require('express');
+var app = express();
 
-http.createServer(function(req, res) {
-	var filename = path.basename(req.url) || 'index.html',
-			ext = path.extname(filename),
-			dir = path.dirname(req.url).substring(1),
-			localPath = __dirname + '/public/';
+app.configure(function() {
+	app.set('view engine', 'jade');
+	app.use(express.static( __dirname + '/public' ));
+});
 
-	if (extensions[ext]) {
-		localPath = (dir? dir + '/' : '') + filename;
-		console.log(localPath);
-		path.exists(localPath, function(exists) {
-			if (exists) {
-				getFile(localPath, extensions[ext], res);
-			} else {
-				res.writeHead(404);
-				res.end()
-			}
-		});
-	}
-}).listen(3000);
+app.get('/', function(req, res) {
+	res.render('index', { layout: false });
+});
 
-function getFile (localPath, mimeType, res) {
-	fs.readFile(localPath, function(err, content) {
-		if (!err) {
-			res.writeHead(200,{
-				'Content-Type': mimeType,
-				'Content-Length': content.length
-			});
-			res.end(content);
-		} else {
-			res.writeHead(500);
-			res.end(err);
-		}
-	});
-}
+app.listen(3000);
