@@ -10,4 +10,12 @@ app.get('/', function(req, res) {
 	res.render('index', { layout: false });
 });
 
+app.get('/account/authenticated', function(req, res) {
+  if (res.session.loggedIn) {
+    res.send(200);
+  } else {
+    res.send(401);
+  }
+});
+
 app.listen(3000);
